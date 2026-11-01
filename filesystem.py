@@ -17,5 +17,34 @@ class Diretorio:
 
         self.filhos[elemento.nome] = elemento
 
+    def buscar(self, caminho):
+        # o caminho deve começar com /
+        if not caminho.startswith("/"):
+            raise ValueError("O caminho deve ser absoluto")
+
+        # o caminho / representa o diretorio raiz
+        if caminho == "/":
+            return self
+
+        partes = caminho.strip("/").split("/")
+
+        atual = self
+
+        for parte in partes: 
+            if not isinstance(atual, Diretorio):
+                raise ValueError(
+                    f"'{atual.nome}' não é um diretório"
+                )
+            
+            if parte not in atual.filhos:
+                raise FileNotFoundError(
+                    f"elemento '{parte}' não encontrado"
+                )
+            atual = atual.filhos[parte]
+
+        return atual
+
+
+
 
 # ainda falta realizar o teste no main, começar por lá

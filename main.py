@@ -1,26 +1,26 @@
 from filesystem import Arquivo, Diretorio
 
-# def main(): 
-#    print("===========================================")
-#    print(" SIMULADOR DE SISTEMA DE ARQUIVOS")
-#    print("===========================================")
-#    print("Sistema iniciado com sucesso")
+def main(): 
+   print("===========================================")
+   print(" SIMULADOR DE SISTEMA DE ARQUIVOS")
+   print("===========================================")
+   print("Sistema iniciado com sucesso")
 
-# def main():
-#     home = Diretorio("home")
+def main():
+    home = Diretorio("home")
 
-#     arquivo = Arquivo("notas.txt", "estudando SO")
+    arquivo = Arquivo("notas.txt", "estudando SO")
 
-#     home.adicionar(arquivo)
+    home.adicionar(arquivo)
 
-#     print("Diretório:", home.nome)
-#     print("Arquivo:", arquivo.nome)
-#     print("Conteúdo:", arquivo.conteudo)
-#     print("Tamanho:", arquivo.obter_tamanho(), "bytes")
+    print("Diretório:", home.nome)
+    print("Arquivo:", arquivo.nome)
+    print("Conteúdo:", arquivo.conteudo)
+    print("Tamanho:", arquivo.obter_tamanho(), "bytes")
 
-#     print("\nElementos dentro de home:")
-#     for nome in home.filhos:
-#         print("-", nome)
+    print("\nElementos dentro de home:")
+    for nome in home.filhos:
+        print("-", nome)
 
 def exibir_arvore(diretorio, nivel = 0):
     for elemento in diretorio.filhos.values():
@@ -56,6 +56,19 @@ def main():
     print("/")
 
     exibir_arvore(raiz)
+
+    # testando a busca de caminhos
+    print("\n[TESTE DE BUSCA]")
+
+    encontrado = raiz.buscar("/sistema/logs")
+
+    print("Diretório encontrado:", encontrado.nome)
+
+    # testando a busca de arquivos dentro do diretorio
+    arquivo_encontrado = raiz.buscar("/sistema/logs/app.log")
+
+    print("Arquivo encontrado:", arquivo_encontrado.nome)
+    print("Tamanho:", arquivo_encontrado.obter_tamanho(), "bytes")
 
 if __name__ == "__main__":
     main()
