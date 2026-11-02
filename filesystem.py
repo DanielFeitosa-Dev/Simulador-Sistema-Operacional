@@ -44,7 +44,45 @@ class Diretorio:
 
         return atual
 
+class SistemaArquivos:
+    def __init__(self):
+        self.raiz = Diretorio("/")  # define o "/" como raiz
+        self.diretorio_atual = self.raiz    # define o diretorio atual como a raiz 
+
+
+    # Usado para navegação geral
+    def buscar(self, caminho):
+        if caminho.startswith("/"):
+            atual = self.raiz
+        else:
+            atual = self.diretorio_atual
+        if caminho == "/" or caminho == "":
+            return atual
+
+        partes = caminho.strip("/").split("/")
+
+        for parte in partes:
+            if not isinstance(atual, Diretorio):
+                raise ValueError(
+                    f"'{atual.nome}' não é um diretório"
+                )
+            if parte not in atual.filhos:
+                raise fileNotFoundError(
+                    f"Elemento '{parte}' não encontrado"
+                )
+            atual = atual.filhos[parte]
+
+        return atual
+
+    def mudar_diretorio(self, caminho):
+        destino = self.buscar(caminho)
+
+        if not isinstance(destino, Diretorio):
+            raise ValueError(
+                f"'{destino.nome}' não é um diretório"
+            )
+
+        self.diretorio_atual = destino
 
 
 
-# ainda falta realizar o teste no main, começar por lá
