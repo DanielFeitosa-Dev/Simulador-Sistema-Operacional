@@ -112,6 +112,15 @@ def main():
     print("Tamanho:",
           encontrado.obter_tamanho(), "bytes")
 
+    sistema_arquivos = SistemaArquivos()
+
+    # Criando diretórios usando caminhos absolutos
+    sistema_arquivos.criar_diretorio("/sistema")
+    sistema_arquivos.criar_diretorio("/sistema/logs")
+
+    print("[ÁRVORE DO SISTEMA DE ARQUIVOS]")
+    print("/")
+    exibir_arvore(sistema_arquivos.raiz)
 
 if __name__ == "__main__":
     main()
