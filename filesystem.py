@@ -67,7 +67,7 @@ class SistemaArquivos:
                     f"'{atual.nome}' não é um diretório"
                 )
             if parte not in atual.filhos:
-                raise fileNotFoundError(
+                raise FileNotFoundError(
                     f"Elemento '{parte}' não encontrado"
                 )
             atual = atual.filhos[parte]
@@ -99,10 +99,10 @@ class SistemaArquivos:
             caminho_pai = partes[0]
             nome = partes[1]
 
-        if caminho_pai == "":
-            caminho_pai = "/"
+            if caminho_pai == "":
+                caminho_pai = "/"
 
-        pai = self.buscar(caminho_pai)
+            pai = self.buscar(caminho_pai)
 
         if not isinstance(pai, Diretorio):
             raise ValueError("O local de destino não é um diretório.")
