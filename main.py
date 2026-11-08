@@ -125,47 +125,151 @@ def main():
 
     # testando criaçao por caminhos relativos 
   
+    # sistema_arquivos = SistemaArquivos()
+
+    # # Criando diretórios por caminhos absolutos
+    # sistema_arquivos.criar_diretorio("/sistema")
+    # sistema_arquivos.criar_diretorio("/sistema/logs")
+
+    # # Entrando no diretório sistema
+    # sistema_arquivos.mudar_diretorio("/sistema")
+
+    # # Criando diretório usando caminho relativo
+    # sistema_arquivos.criar_diretorio("documentos")
+    # sistema_arquivos.criar_diretorio("documentos/trabalhos")
+
+    # sistema_arquivos.mudar_diretorio("documentos")
+    # sistema_arquivos.criar_diretorio("projetos")
+
+    # try:
+    #     sistema_arquivos.criar_diretorio("nao existe/novo")
+    # except FileNotFoundError as erro:
+    #     print("erro esperado1:", erro)
+
+    #     arquivo = Arquivo("relatorio.txt")
+    #     sistema_arquivos.diretorio_atual.adicionar(arquivo)
+
+    # try:
+    #     sistema_arquivos.criar_diretorio("relatorio.txt/novo")  # Tentativa de criar um diretório dentro de um arquivo
+    # except ValueError as erro:
+    #     print("erro esperado:", erro)
+
+    # try:
+    #     sistema_arquivos.criar_diretorio("/sistema/logs")  # Tentativa de criar um diretório que já existe  
+    # except ValueError as erro:
+    #     print("erro esperado3:", erro)
+
+    # print("[ÁRVORE DO SISTEMA DE ARQUIVOS]")
+    # print("/")
+    # exibir_arvore(sistema_arquivos.raiz)
+
+
+
     sistema_arquivos = SistemaArquivos()
 
-    # Criando diretórios por caminhos absolutos
+    # =================================
+    # 1. CRIANDO DIRETÓRIOS
+    # =================================
+
+    # Caminhos absolutos
     sistema_arquivos.criar_diretorio("/sistema")
     sistema_arquivos.criar_diretorio("/sistema/logs")
 
-    # Entrando no diretório sistema
+    # Entrando em /sistema
     sistema_arquivos.mudar_diretorio("/sistema")
 
-    # Criando diretório usando caminho relativo
+    # Caminhos relativos
     sistema_arquivos.criar_diretorio("documentos")
     sistema_arquivos.criar_diretorio("documentos/trabalhos")
 
+    # Entrando em documentos
     sistema_arquivos.mudar_diretorio("documentos")
-    sistema_arquivos.criar_diretorio("projetos")
 
-    try:
-        sistema_arquivos.criar_diretorio("nao existe/novo")
-    except FileNotFoundError as erro:
-        print("erro esperado1:", erro)
+    sistema_arquivos.criar_diretorio("imagens")
 
-        arquivo = Arquivo("relatorio.txt")
-        sistema_arquivos.diretorio_atual.adicionar(arquivo)
+    # =================================
+    # 2. CRIANDO ARQUIVOS
+    # =================================
 
-    try:
-        sistema_arquivos.criar_diretorio("relatorio.txt/novo")  # Tentativa de criar um diretório dentro de um arquivo
-    except ValueError as erro:
-        print("erro esperado:", erro)
+    # Arquivo no diretório atual (/sistema/documentos)
+    sistema_arquivos.criar_arquivo("leia-me.txt")
 
-    try:
-        sistema_arquivos.criar_diretorio("/sistema/logs")  # Tentativa de criar um diretório que já existe  
-    except ValueError as erro:
-        print("erro esperado3:", erro)
+    # Arquivo com conteúdo em caminho relativo
+    sistema_arquivos.criar_arquivo(
+        "relatorio.txt",
+        "Meu primeiro arquivo no simulador."
+    )
+
+    # Arquivo em caminho absoluto
+    sistema_arquivos.criar_arquivo(
+        "/sistema/logs/erro.txt",
+        "Registro de erro do sistema."
+    )
+
+    # Arquivo dentro de um subdiretório relativo
+    sistema_arquivos.criar_arquivo(
+        "trabalhos/atividade.txt",
+        "Atividade de Sistemas Operacionais."
+    )
+
+    # =================================
+    # 3. EXIBINDO A ÁRVORE
+    # =================================
 
     print("[ÁRVORE DO SISTEMA DE ARQUIVOS]")
     print("/")
     exibir_arvore(sistema_arquivos.raiz)
 
-    # teste de id do git 
+
+    # =================================
+    # 4. TESTANDO A CRIAÇÃO DE ARQUIVOS
+    # =================================
+
+# Teste 1: Verificar o conteúdo e o tamanho
+    arquivo = sistema_arquivos.buscar("relatorio.txt")
+
+    print("\n[TESTE 1 - CONTEÚDO E TAMANHO]")
+    print("Conteúdo:", arquivo.conteudo)
+    print("Tamanho:", arquivo.obter_tamanho(), "bytes")
+
+# Teste 2: Verificar arquivo vazio
+    arquivo_vazio = sistema_arquivos.buscar("leia-me.txt")
+
+    print("\n[TESTE 2 - ARQUIVO VAZIO]")
+    print("Conteúdo:", repr(arquivo_vazio.conteudo))
+    print("Tamanho:", arquivo_vazio.obter_tamanho(), "bytes")
 
 
+    # =================================
+# 5. TESTANDO SITUAÇÕES DE ERRO
+# =================================
+
+    print("\n[TESTE 3 - ARQUIVO DUPLICADO]")
+
+    try:
+        sistema_arquivos.criar_arquivo("relatorio.txt")
+    except ValueError as erro:
+        print("Erro esperado:", erro)
+
+
+    print("\n[TESTE 4 - DIRETÓRIO INEXISTENTE]")
+
+    try:
+        sistema_arquivos.criar_arquivo(
+            "nao_existe/arquivo.txt"
+        )
+    except FileNotFoundError as erro:
+        print("Erro esperado:", erro)
+
+
+    print("\n[TESTE 5 - DESTINO NÃO É DIRETÓRIO]")
+
+    try:
+        sistema_arquivos.criar_arquivo(
+            "relatorio.txt/arquivo.txt"
+        )
+    except ValueError as erro:
+        print("Erro esperado:", erro)
 
 if __name__ == "__main__":
     main()

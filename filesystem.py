@@ -109,6 +109,41 @@ class SistemaArquivos:
 
         novo_diretorio = Diretorio(nome)
         pai.adicionar(novo_diretorio)
+        
+    def criar_arquivo(self, caminho, conteudo=""):
+        if caminho == "/" or caminho == "":
+            raise ValueError("Caminho inválido para criação de arquivo.")
+
+        caminho = caminho.rstrip("/")
+        partes = caminho.rsplit("/", 1)
+
+        if len(partes) == 1:
+            nome = partes[0]
+            pai = self.diretorio_atual
+
+        else:
+            caminho_pai = partes[0]
+            nome = partes[1]
+
+            if caminho_pai == "":
+                caminho_pai = "/"
+
+            pai = self.buscar(caminho_pai)
+
+        if not isinstance(pai, Diretorio):
+            raise ValueError("O local de destino não é um diretório.")
+
+        novo_arquivo = Arquivo(nome, conteudo)
+        pai.adicionar(novo_arquivo)
+
+    # ainda falta testar, nao fiz commit nenhum
+
+
+
+
+
+    
+
 
 
 
