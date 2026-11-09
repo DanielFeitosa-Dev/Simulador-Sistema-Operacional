@@ -6,6 +6,34 @@ class Arquivo:
     def obter_tamanho(self):
         return len(self.conteudo.encode("utf-8"))   # definir como utf-8 vai facilitar as contas de tamanho no futuro
 
+class RequisicaoES:
+    def __init__(self, tipo, caminho, tamanho, tamanho_bloco=4096):
+        self.tipo = tipo
+        self.caminho = caminho
+        self.tamanho = tamanho
+        self.tamanho_bloco = tamanho_bloco
+
+        self.quantidade_blocos = (
+            tamanho + tamanho_bloco - 1
+        ) // tamanho_bloco
+
+class Disco:
+    def __init__(self):
+        self.historico = []
+
+    def executar_requisicao(self, requisicao):
+
+        print("\n[OPERAÇÃO DE DISCO]")
+
+        print("Operação:", requisicao.tipo)
+        print("Arquivo:", requisicao.caminho)
+        print("Tamanho:", requisicao.tamanho, "bytes")
+        print("Blocos:", requisicao.quantidade_blocos)
+
+        print("Status: CONCLUÍDA")
+
+        self.historico.append(requisicao)
+
 class Diretorio:
     def __init__(self, nome):
         self.nome = nome    # o self serve para referenciar os atributos de cada classe 
